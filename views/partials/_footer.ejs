@@ -1,34 +1,59 @@
-  </div>
-
-  <footer role="contentinfo" style="background-color: #1b1f21; color: #ccc; border-top: 4px solid #e7e7e7; margin-top: 100px;padding: 60px 0px;">
+  <footer>
     <div class="container">
-      <div class="pull-right bs-social">
-        <ul class="social-buttons">
-        </ul>
-      </div>
-
       <div class="row">
-        <div class="col-sm-3">
-          <div>
-            <a href="/">
-              <img src="/" alt="company logo" height="30">
-            </a>
-          </div>
+        <div class="col-sm-3 menu">
+          <h3>Overview</h3>
+          <ul>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Coming soon</a></li>
+          </ul>
         </div>
-
-        <div class="col-sm-2">
-          <div><strong>About</strong></div>
-            <div><a href="#" target="blank">About Us</a></div>
-            <div><a href="#" target="blank">History</a></div>
-            <div><a href="#" target="blank">Privacy & terms</a></div>
-            <div><a href="#" target="blank">Blog</a></div>
-            <div><a href="#" target="blank">Careers</a></div>
+        <div class="col-sm-3 menu">
+          <h3>Menu</h3>
+          <ul>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Contact us</a></li>
+            <li>
+              <a href="#">Jobs</a>
+              <a href="#" class="hiring">We're hiring!</a>
+            </li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Coming soon</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-2 menu">
+          <h3>Social</h3>
+          <ul>
+            <li><a href="#">Youtube</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-4 newsletter">
+          <div class="signup clearfix">
+            <p>
+              Want information on up-coming stuff and promotion ?
+              Sign up for the newsletter
+            </p>
+            <form action="/signup/newsletter" method="post">
+              <input type="text" name="email" class="form-control" placeholder="your email address">
+              <input type="submit" value="Sign up" class="btn-block btn-success">
+            </form>
           </div>
-        <div class="col-sm-2">
-          <div><strong>Contact Us</strong></div>
-          <div><a href="#" target="blank">+65 6779 8213</a></div>
-          <div><a href="#" target="blank">hello@yelpcamp.com</a></div>
-          <div><a href="#" target="blank">Leave Feedback</a></div>
+          <a href="#"><img src="/img/youtube.png" alt="youtube"></a>
+          <a href="#"><img src="/img/twitter.png" alt="twitter"></a>
+        </div>
+      </div>
+      <div class="row credits">
+        <div class="col-md-12">
+          Copyright © 2016. CS-Studio
         </div>
       </div>
     </div>
@@ -38,5 +63,9 @@
   <link rel="script" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" crossorigin="anonymous"
     integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="></script>
+
+    <!--[if lt IE 9]>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+   <![endif]-->
   </body>
 </html>

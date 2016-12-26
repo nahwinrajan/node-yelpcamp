@@ -1,0 +1,44 @@
+<% include ./../partials/_header %>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image">
+    <h1 class="page-header">YelpCamp</h1>
+    <h3>one place to find all the camp site.</h3>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% campgrounds.forEach(function(camp) { %>
+      <div class="col-sm-4 col-md-3">
+        <div class="thumbnail thumbnail-camp">
+          <a href="/campgrounds/<%=camp.id%>">
+            <img src="<%= camp.image %>" alt="<%= camp.name %>">
+            <div class="caption">
+              <span class="row">
+                <h3><%= camp.name %></h3>
+              </span>
+              <p class="small text-primary">
+                <%- camp.description.substring(0, 100) %>...
+              </p>
+              <span class="row">
+                <span class="col-sm-6 text-left">
+                  <p class="success">
+                    <i class="fa fa-star" aria-hidden="true"></i> <%= camp.rating%>
+                  </p>
+                </span>
+                <span class="col-sm-6 text-right">
+                  <p class="success">
+                    <i class="fa fa-usd" aria-hidden="true"></i> <%= camp.price%>
+                  </p>
+                </span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<% include ./../partials/_footer %>

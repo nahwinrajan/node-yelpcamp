@@ -1,0 +1,48 @@
+<% include ./../partials/_header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h1 class="text-center">Edit - <%= camp.name%></h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form action="/campgrounds/<%= camp.id %>?_method=PUT" method="POST">
+            <div class="form-group">
+              <label for="name" class="control-label">Name</label>
+              <input type="text" class="form-control" autofocus value="<%= camp.name%>"
+                placeholder="campground name" id="name" name="camp[name]">
+            </div>
+            <div class="form-group">
+              <label for="price" class="control-label">Price per Night</label>
+              <input type="number" class="form-control" placeholder="price per night"
+                id="price" name="camp[price]" min="0" step="0.01" autofocus value="<%= camp.price%>">
+            </div>
+            <div class="form-group">
+              <label for="rating" class="control-label">Rating</label>
+              <input type="number" class="form-control" placeholder="campground rating"
+                id="rating" name="camp[rating]" min="0" max="5" step="0.5" autofocus value="<%= camp.rating%>">
+            </div>
+            <div class="form-group">
+              <label for="image" class="control-label">Image URL</label>
+              <input type="text" class="form-control" placeholder="image url"
+                id="image" name="camp[image]" autofocus value="<%= camp.image%>">
+            </div>
+            <div class="form-group">
+              <label for="description" class="control-label">Description</label>
+              <textarea rows="5" id="description" name="camp[description]"
+                placeholder="describe the campground"
+                class="form-control"><%= camp.description %></textarea>
+                <span class="help-block">put it with html markup form to display it nicely</span>
+            </div>
+            <div class="form-group text-right">
+              <a href="/" class="btn btn-default">Cancel</a>
+              <button type="submit" class="btn btn-success">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ./../partials/_footer %>
