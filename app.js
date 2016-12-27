@@ -5,10 +5,12 @@ var express         = require('express'),
   path              = require('path'),
   methodOverride    = require('method-override'),
   expressSanitizer  = require('express-sanitizer'),
-  bodyParser        = require('body-parser');
+  bodyParser        = require('body-parser'),
+  seedDB            = require('./seeds');
 
 // variables - models
 var Campground = require("./models/campground");
+var Comment = require("./models/comment");
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, 'public')));  // declare public / static asset directory
@@ -19,10 +21,7 @@ app.use(expressSanitizer()); //sanitize user's html encoding input
 
 //db-config
 mongoose.connect("mongodb://localhost/yelpcamp");
-// Campground.create({ name: "Salmon Creek", image: "https://farm6.staticflickr.com/5181/5641024448_04fefbb64d.jpg", price:"9", rating: "4", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }, function(err, handler){});
-// Campground.create({ name: "Granite Hill", image: "https://farm9.staticflickr.com/8422/7842069486_c61e4c6025.jpg", price:"7.5", rating: "3.5", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."  }, function(err, handler){});
-// Campground.create({ name: "Green Meadow", image: "https://farm8.staticflickr.com/7258/7121861565_3f4957acb1.jpg", price:"5", rating: "3", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."  }, function(err, handler){});
-// Campground.create({ name: "Dawson Creek", image: "https://farm5.staticflickr.com/4027/4368764673_c8345bd602.jpg", price:"6", rating: "3", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."  }, function(err, handler){});
+// seedDB();
 
 //routes
 app.get("/", function(req, res) {
@@ -65,7 +64,7 @@ app.post("/campgrounds", function(req, res) {
 
 // show a particular campground
 app.get("/campgrounds/:id", function(req, res) {
-  Campground.findById(req.params.id, function(err, camp) {
+  Campground.findById(req.params.id).populate("comments").exec(function(err, camp) {
     if(err) {
       console.log("Error: ", err);
       // todo: do some proper error handling and error message

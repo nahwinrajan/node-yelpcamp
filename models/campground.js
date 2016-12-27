@@ -6,6 +6,12 @@ var campgroundSchema = mongoose.Schema({
   rating: Number,
   price: Number,
   image: String,
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ],
   created: {type: Date, default: Date.now}
 });
 

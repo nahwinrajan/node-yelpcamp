@@ -62,4 +62,22 @@
     </div>
   </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8  col-sm-offset-2">
+        <h3>Comments</h3>
+        <hr>
+        <% camp.comments.forEach(function(comment){ %>
+          <div class="quote">
+            <%= comment.message %>
+            <br>
+            <span class="text-right">
+              <% comment.author %>
+            </span>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
 <% include ./../partials/_footer %>
