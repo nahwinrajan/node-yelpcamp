@@ -24,6 +24,8 @@ mongoose.connect("mongodb://localhost/yelpcamp");
 // seedDB();
 
 //routes
+
+// ===== CAMPGROUNDS =====
 app.get("/", function(req, res) {
   res.redirect("/campgrounds");
 });
@@ -117,6 +119,36 @@ app.delete("/campgrounds/:id", function(req, res){
       res.redirect("/");
     }
   });
+});
+
+// ===== COMMENTS =====
+app.get("/campgrounds/:id/comments/new", function(req, res) {
+  Campground.findById(req.params.id, (err, camp) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.render("campgrounds/comments/new", {camp: camp});
+    }
+  });
+});
+
+app.post("/campgrounds/:id/comments", function(req, res){
+  Campground.findById(req.params.id, (err, camp) => {
+    if(err) {
+      console.log(err);
+      render("campgrounds/comments/new");
+    } else {
+      Comment.create(req.body.comment, function(err, comment){
+        if (err) {
+          console.log(err);
+        } else {
+          camp.comments.push(comment);
+          camp.save();
+          res.redirect("/campgrounds/" + req.params.id);
+        }
+      });
+    }
+  })
 });
 
 // -- end of routes

@@ -1,83 +1,43 @@
 <% include ./../partials/_header %>
-
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <!-- <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    </ol> -->
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-
-      <div class="item active">
-        <img src="<%=camp.image %>" alt="<%=camp.name %>">
-        <!-- <div class="carousel-caption">
-          <h3><%=camp.name %></h3>
-        </div> -->
-      </div>
-
-    </div>
-
-    <!-- Left and right controls -->
-    <!-- <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="fa fa-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="fa fa-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a> -->
-  </div>
-
   <div class="container">
     <div class="row">
-      <div class="col-sm-8 col-sm-offset-2">
-        <h1 class="page-header">
-          <span><%=camp.name %></span>
-          <span>
-            <i class="fa fa-star text-warning" aria-hidden="true"></i> <%= camp.rating%>
-          </span>
-        </h1>
-        <hr>
-        <p><%- camp.description %></p>
+      <div class="col-md-3">
+        <h2>Yelp Camp</h2>
+        <ul class="list-group">
+          <li class="list-group-item active">List item 1</li>
+          <li class="list-group-item">List item 2</li>
+          <li class="list-group-item">List item 3</li>
+          <li class="list-group-item">List item 4</li>
+          <li class="list-group-item">List item 5</li>
+        </ul>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4 col-sm-offset-2 pull-left">
-        <hr>
-        <a class="btn btn-small btn-warning" href="/campgrounds/<%= camp.id %>/edit">
-          Edit
-        </a>
-        <form action="/campgrounds/<%= camp.id %>?_method=DELETE" method="POST"
-          class="inline">
-          <input type="submit" value="Delete" class="btn btn-danger">
-        </form>
-      </div>
-      <div class="col-sm-4">
-        <hr>
-        <a class="btn btn-small btn-success pull-right" href="#">
-          Book for <i class="fa fa-usd" aria-hidden="true"></i> <%= camp.price%>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-8  col-sm-offset-2">
-        <h3>Comments</h3>
-        <hr>
-        <% camp.comments.forEach(function(comment){ %>
-          <div class="quote">
-            <%= comment.message %>
+      <div class="col-md-9">
+        <div class="thumbnail thumbnail-image-full-width">
+          <img src="<%= camp.image %>" class="img-responsive"
+            alt="image of <%= camp.image %>" />
+          <div class="caption-full">
+            <h4 class="pull-right"><i class="fa fa-usd" aria-hidden="true"></i>
+<%= camp.price %>/night</h4>
+            <h4><a href="#"><%= camp.name %></a></h4>
             <br>
-            <span class="text-right">
-              <% comment.author %>
-            </span>
+            <p><%- camp.description %></p>
           </div>
-        <% }); %>
+        </div>
+
+        <div class="well">
+          <a href="/campgrounds/<%= camp.id %>/comments/new"
+            class="btn btn-success pull-right">
+            Leave a comment
+          </a>
+          <hr>
+          <% camp.comments.forEach(function(comment){ %>
+            <div class="bs-callout bs-callout-success">
+              <p><%= comment.message %></p>
+              <p class="text-right text-capitalize">- <%= comment.author %></p>
+            </div>
+          <% }) %>
+        </div>
       </div>
     </div>
   </div>
-
 <% include ./../partials/_footer %>

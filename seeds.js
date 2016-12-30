@@ -65,17 +65,7 @@ function seedDB() {
             console.log(err);
           } else {
             campground.comments.push(cmt);
-            campground.save((err, dt) => {
-              Comment.create(objCommentLeia, (err, cmt) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  campground.comments.push(cmt);
-                  campground.save();
-                  console.log("leia's comment added");
-                }
-              });
-            });
+            campground.save();
             console.log("yoda's comment added");
           }
         });
