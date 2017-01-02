@@ -1,0 +1,42 @@
+<% include ./../partials/_header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h1 class="text-center">Welcome to YelpCamp</h1>
+      <hr>
+      <div class="panel">
+        <div class="panel-body">
+          <form action="/users" method="post">
+            <div class="form-group">
+              <input type="text" autofocus placeholder="Full Name"
+                name="user[name]" id="user_name" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="email" autofocus placeholder="Email Address"
+                name="user[email]" id="user_email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password"
+                name="user[password]" id="user_password" class="form-control">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success btn-block" type="submit"
+                data-disable-with="<i class='fa fa-spinner fa-spin'></i>
+                registering...">Register
+              </button>
+            </div>
+          </form>
+          <div class="text-center">
+            <p class="text-muted">
+              Already have an account ?
+              <a href="/users/signin" class="text-success">Sign In</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ./../partials/_footer %>

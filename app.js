@@ -6,11 +6,15 @@ var express         = require('express'),
   methodOverride    = require('method-override'),
   expressSanitizer  = require('express-sanitizer'),
   bodyParser        = require('body-parser'),
+  passport          = require('passport'),
+  localStrategy     = require('passport-local').Strategy,
+  expressSession    = require('express-session'),
   seedDB            = require('./seeds');
 
 // variables - models
-var Campground = require("./models/campground");
-var Comment = require("./models/comment");
+var Campground  = require("./models/campground"),
+    Comment     = require("./models/comment"),
+    User        = require("./models/user");
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, 'public')));  // declare public / static asset directory
@@ -18,12 +22,24 @@ app.use(bodyParser.urlencoded({extended: true})); // parse html input control an
 //methodOverride must be call after bodyParser is called
 app.use(methodOverride('_method')); // enable put and delete html verb by overriding post method
 app.use(expressSanitizer()); //sanitize user's html encoding input
-
+app.use(expressSession({
+  secret: "Dies ist das Geheimnis, das verwendet wird, um das Sitzungs-ID-Cookie zu signieren. Dies kann entweder ein String für ein einzelnes Geheimnis oder ein Array mit mehreren Geheimnissen sein",
+  resave: false,
+  saveUninitialized: false
+}));
 //db-config
 mongoose.connect("mongodb://localhost/yelpcamp");
 // seedDB();
 
-//routes
+//passport (Auth) config
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+// ====== ROUTES ======
 
 // ===== CAMPGROUNDS =====
 app.get("/", function(req, res) {
@@ -151,7 +167,61 @@ app.post("/campgrounds/:id/comments", function(req, res){
   })
 });
 
+// ===== USERS / AUTHS =====
+app.get("/users/signup", (req, res) => {
+  res.render("users/signup");
+});
+//create new user
+app.post("/users", (req, res) => {
+  let newUser = new User({
+    name: req.body.user.name,
+    email: req.body.user.email
+  });
+  User.register(newUser, req.body.user.password, function (err, user) {
+    if(err) {
+      console.log(err);
+      return res.render("users/signup", {usr: user});
+    }
+    console.log("Created user: " + user.email);
+    
+    //  passport authenticate basically invoke req.login()
+    //  http://passportjs.org/docs/login
+    req.login(user, function(err) {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      return res.redirect('/campgrounds');
+    });
+  });
+});
+
+app.get("/users/signin", (req, res) => {
+  res.render("users/signin");
+});
+
+// log-in logic
+app.post("/users/signin", passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/users/signin"
+  }), function() {
+});
+
+app.get('/users/signout', (req, res) => {
+  req.logout();
+  console.log("user signed out, redirecting to homepage");
+  res.redirect('/');
+});
 // -- end of routes
+
+// middleware
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+
+  res.redirect("/signin");
+}
 
 app.listen(3000, function() {
   console.log("YelpCamp Server is up and running...");
