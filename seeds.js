@@ -53,25 +53,25 @@ function seedDB() {
     }
   });
 
-  //adding some initial/sample data
-  data.forEach((seed) => {
-    Campground.create(seed, (err, campground) => {
-      if(err) {
-        console.log("seedDB - error while adding sample campground to db \n", error);
-      } else {
-        console.log("added Campgrounds!");
-        Comment.create(objCommentYoda, (err, cmt) => {
-          if (err) {
-            console.log(err);
-          } else {
-            campground.comments.push(cmt);
-            campground.save();
-            console.log("yoda's comment added");
-          }
-        });
-      }
-    });
-  });
+  // //adding some initial/sample data
+  // data.forEach((seed) => {
+  //   Campground.create(seed, (err, campground) => {
+  //     if(err) {
+  //       console.log("seedDB - error while adding sample campground to db \n", error);
+  //     } else {
+  //       console.log("added Campgrounds!");
+  //       Comment.create(objCommentYoda, (err, cmt) => {
+  //         if (err) {
+  //           console.log(err);
+  //         } else {
+  //           campground.comments.push(cmt);
+  //           campground.save();
+  //           console.log("yoda's comment added");
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
 }
 
 module.exports = seedDB;

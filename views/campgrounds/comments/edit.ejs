@@ -3,22 +3,22 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-      <h1 class="text-center">Comment for - <%= camp.name %></h1>
+      <h1 class="text-center">Update Comment</h1>
       <div class="panel panel-default">
         <div class="panel-body">
-          <form action="/campgrounds/<%= camp.id %>/comments" method="post">
+          <form action="/campgrounds/<%= camp_id %>/comments/<%= comment.id %>?_method=PUT" method="POST">
             <div class="form-group">
               <label for="message" class="control-label">Comment</label>
               <textarea rows="5" id="message" name="comment[message]"
-                placeholder="your comment about  <%= camp.name %> campground."
-                class="form-control"></textarea>
+                placeholder="your comment about the campground."
+                class="form-control"><%= comment.message %></textarea>
                 <span class="help-block">
                   put it with html markup to display it nicely
                 </span>
             </div>
             <div class="form-group text-right">
               <a href="/" class="btn btn-default">Cancel</a>
-              <button type="submit" class="btn btn-success">Submit</button>
+              <button type="submit" class="btn btn-success">Update!</button>
             </div>
           </form>
         </div>

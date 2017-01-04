@@ -17,15 +17,31 @@
             alt="image of <%= camp.image %>" />
           <div class="caption-full">
             <div class="space-between">
-              <h4><a href="#"><%= camp.name %></a></h4>
-              <h4>
+              <h3><a href="#"><%= camp.name %></a></h3>
+              <h3>
                 <i class="fa fa-usd" aria-hidden="true"></i>
                 <%= camp.price %>/night
-              </h4>
+              </h3>
             </div>
             <br>
             <p><%- camp.description %></p>
-            <p class="text-right">created by <em><%= camp.author.name %></em></p>
+            <p class="text-right">host: <em><%= camp.author.name %></em></p>
+            <% if(currentUser && camp.author.id.equals(currentUser.id)) { %>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a href="/campgrounds/<%= camp.id %>/edit" class="btn btn-warning btn-sm">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    Edit
+                  </a>
+                  <form action="/campgrounds/<%= camp.id %>?_method=DELETE" method="POST" class="inline">
+                    <button class="btn btn-danger btn-sm">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </div>
+            <% } %>
           </div>
         </div>
 
@@ -38,7 +54,27 @@
           <% camp.comments.forEach(function(comment){ %>
             <div class="bs-callout bs-callout-success">
               <p><%= comment.message %></p>
-              <p class="text-right text-capitalize">- <%= comment.author.name %></p>
+              <div class="row">
+                <p class="text-right text-capitalize">- <em><%= comment.author.name %></em></p>
+              </div>
+              <% if(currentUser && comment.author.id.equals(currentUser.id)) { %>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <a href="/campgrounds/<%= camp.id %>/comments/<%= comment.id %>/edit"
+                      class="btn btn-xs btn-warning">
+                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                      Edit
+                    </a>
+                    <form action="/campgrounds/<%= camp.id %>/comments/<%= comment.id %>?_method=DELETE"
+                      method="POST" class="inline">
+                      <button class="btn btn-danger btn-xs">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              <% } %>
             </div>
           <% }) %>
         </div>

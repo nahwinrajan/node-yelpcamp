@@ -35,7 +35,7 @@ app.use(expressSession({
 }));
 //db-config
 mongoose.connect("mongodb://localhost/yelpcamp");
-// seedDB();
+// seedDB();  //populate db with some sample data; todo: update the sample data to incorporate user model and it's association
 
 //passport (Auth) config
 app.use(passport.initialize());

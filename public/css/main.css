@@ -11,12 +11,19 @@
   justify-content: space-between;
 }
 
-.thumbnail-image-full-width img{
-  width: 100%;
+.thumbnail-image-full-width {
+  padding: 0px;
 }
 
-.thumbnail-image-full-width {
+.caption-full {
   padding: 9px;
+}
+
+.thumbnail-image-full-width img{
+  width: 100%;
+  padding: 0;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .main-footer {
