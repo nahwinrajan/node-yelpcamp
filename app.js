@@ -8,7 +8,7 @@ var express         = require('express'),
   bodyParser        = require('body-parser'),
   passport          = require('passport'),
   localStrategy     = require('passport-local').Strategy,
-  expressSession    = require('express-session'),
+  expressSession    = require('express-session'),  
   seedDB            = require('./seeds');
 
 // variables - models
