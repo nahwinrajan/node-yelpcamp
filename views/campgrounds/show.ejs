@@ -16,11 +16,16 @@
           <img src="<%= camp.image %>" class="img-responsive"
             alt="image of <%= camp.image %>" />
           <div class="caption-full">
-            <h4 class="pull-right"><i class="fa fa-usd" aria-hidden="true"></i>
-<%= camp.price %>/night</h4>
-            <h4><a href="#"><%= camp.name %></a></h4>
+            <div class="space-between">
+              <h4><a href="#"><%= camp.name %></a></h4>
+              <h4>
+                <i class="fa fa-usd" aria-hidden="true"></i>
+                <%= camp.price %>/night
+              </h4>
+            </div>
             <br>
             <p><%- camp.description %></p>
+            <p class="text-right">created by <em><%= camp.author.name %></em></p>
           </div>
         </div>
 
@@ -33,7 +38,7 @@
           <% camp.comments.forEach(function(comment){ %>
             <div class="bs-callout bs-callout-success">
               <p><%= comment.message %></p>
-              <p class="text-right text-capitalize">- <%= comment.author %></p>
+              <p class="text-right text-capitalize">- <%= comment.author.name %></p>
             </div>
           <% }) %>
         </div>

@@ -6,6 +6,11 @@
   display: inline;
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 .thumbnail-image-full-width img{
   width: 100%;
 }

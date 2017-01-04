@@ -12,6 +12,13 @@ var campgroundSchema = mongoose.Schema({
       ref: "Comment"
     }
   ],
+  author: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    name: String
+  },
   created: {type: Date, default: Date.now}
 });
 
