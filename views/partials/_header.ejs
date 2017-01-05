@@ -15,3 +15,23 @@
   </head>
   <body>
     <% include _navbar %>
+
+    <% if(error && error.length > 0) { %>
+      <div class="container">
+        <div class="alert alert-danger alert-dismissable fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <p><%- error %></p>
+        </div>
+      </div>
+    <% } else if(success && success.length > 0) { %>
+      <div class="container">
+        <div class="alert alert-success alert-dismissable fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <p><%- success %></p>
+        </div>
+      </div>
+    <% } %>

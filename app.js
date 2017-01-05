@@ -8,7 +8,8 @@ var express         = require('express'),
   bodyParser        = require('body-parser'),
   passport          = require('passport'),
   localStrategy     = require('passport-local').Strategy,
-  expressSession    = require('express-session'),  
+  expressSession    = require('express-session'),
+  flash             = require('connect-flash'),
   seedDB            = require('./seeds');
 
 // variables - models
@@ -33,6 +34,7 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false
 }));
+app.use(flash());
 //db-config
 mongoose.connect("mongodb://localhost/yelpcamp");
 // seedDB();  //populate db with some sample data; todo: update the sample data to incorporate user model and it's association
@@ -48,7 +50,10 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next) {
   // req.user is property set by passport
   // req.locals.variableName => this how we set local variable on view for the route
-  res.locals.currentUser = req.user;
+  res.locals.currentUser  = req.user;
+  // add flash message into local variable in response
+  res.locals.error        = req.flash("error");
+  res.locals.success      = req.flash("success");
   next();
 });
 

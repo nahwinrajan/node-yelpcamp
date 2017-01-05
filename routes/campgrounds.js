@@ -11,6 +11,7 @@ router.get("/", function(req, res) {
   Campground.find({}, function(err, camps) {
     if (err) {
       console.log(err);
+      req.flash("error", "Can't find any campground");
       res.redirect("back");
     } else {
       res.render("campgrounds/index", {campgrounds: camps});
@@ -40,10 +41,10 @@ router.post("/", middlewareObj.isLoggedIn, function (req, res) {
   Campground.create(campground, function (err, createdCamp) {
     if (err) {
       console.log(err);
+      req.flash("error", "Can't submit campground");
       res.redirect("back");
     } else {
-      console.log("----- new campground ------");
-      console.log(createdCamp);
+      req.flash("success", "Successfully created new campground");
       res.redirect("/campgrounds/" + createdCamp._id);
     }
   });
@@ -54,6 +55,7 @@ router.get("/:id", function(req, res) {
   Campground.findById(req.params.id).populate("comments").exec(function(err, camp) {
     if (err) {
       console.log(err);
+      req.flash("error", "Can't find campground");
       res.redirect("back");
     } else {
       res.render("campgrounds/show", {camp: camp});
@@ -66,6 +68,7 @@ router.get("/:id/edit", middlewareObj.checkCampgroundOwnership, function(req, re
   Campground.findById(req.params.id, function(err, camp) {
     if (err) {
       console.log(err);
+      req.flash("error", "Can't find campground");
       res.redirect("back");
     } else {
       res.render("campgrounds/edit", {camp: camp});
@@ -82,9 +85,10 @@ router.put("/:id", middlewareObj.checkCampgroundOwnership, function(req, res) {
   Campground.findByIdAndUpdate(req.params.id, req.body.camp, function(err, updatedData) {
     if (err) {
       console.log(err);
+      req.flash("error", "Can't find campground");
       res.redirect("back");
     } else {
-      console.log('record updated');
+      req.flash("success", "Campground updated");
       res.redirect("/campgrounds/" + req.params.id);
     }
   });
@@ -95,8 +99,10 @@ router.delete("/:id", middlewareObj.checkCampgroundOwnership, function(req, res)
   Campground.findByIdAndRemove(req.params.id, function(err, updatedData) {
     if (err) {
       console.log(err);
+      req.flash("error", "Can't find campground");
       res.redirect("back");
     } else {
+      req.flash("success", "Campground removed");
       res.redirect("/");
     }
   });

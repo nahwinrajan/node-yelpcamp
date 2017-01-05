@@ -11,7 +11,8 @@ router.get("/new", middlewareObj.isLoggedIn, function (req, res) {
   Campground.findById(req.params.id, (err, foundCamp) => {
     if(err) {
       console.log(err);
-      res.send("error encountered");
+      req.flash("error", "Can't find campground");
+      res.redirect("back");
     } else {
       res.render("campgrounds/comments/new", { camp: foundCamp });
     }
@@ -22,7 +23,8 @@ router.post("/", middlewareObj.isLoggedIn, function (req, res) {
   Campground.findById(req.params.id, (err, foundCamp) => {
     if(err) {
       console.log(err);
-      res.send("error encountered");
+      req.flash("error", "Can't find campground");
+      res.redirect("back");
     } else {
       let comment = {
         message: req.sanitize(req.body.comment.message),
@@ -35,11 +37,12 @@ router.post("/", middlewareObj.isLoggedIn, function (req, res) {
       Comment.create(comment, function (err, createdComment) {
         if (err) {
           console.log(err);
-          res.send("error encountered");
+          req.flash("error", "Can't submit comment");
+          res.redirect("back");
         } else {
           foundCamp.comments.push(createdComment);
           foundCamp.save();
-
+          req.flash("success", "Comment submitted");
           res.redirect("/campgrounds/" + req.params.id);
         }
       });
@@ -52,6 +55,7 @@ router.get("/:comment_id/edit", middlewareObj.checkCommentOwnership, function(re
   Comment.findById(req.params.comment_id, function(err, foundComment) {
     if(err) {
       console.log(err);
+      req.flash("error", "Can't find comment");
       res.redirect("/campgrounds/" + req.params.id);
     } else {
       res.render("campgrounds/comments/edit", {comment: foundComment, camp_id: req.params.id});
@@ -65,8 +69,10 @@ router.put("/:comment_id", middlewareObj.checkCommentOwnership, function(req, re
   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment) {
     if (err) {
       console.log(err);
-      res.send("error encountered");
+      req.flash("error", "Can't update comment");
+      res.redirect("back");
     } else {
+      req.flash("success", "Comment updated");
       res.redirect("/campgrounds/" + req.params.id);
     }
   });
@@ -77,8 +83,10 @@ router.delete("/:comment_id", middlewareObj.checkCommentOwnership, function(req,
   Comment.findByIdAndRemove(req.params.comment_id, function(err, deletedData) {
     if (err) {
       console.log(err);
-      res.send("error encountered");
+      req.flash("error", "Can't delete comment");
+      res.redirect("back");
     } else {
+      req.flash("success", "Comment removed");
       res.redirect("/campgrounds/" + req.params.id);
     }
   });
