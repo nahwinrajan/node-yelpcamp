@@ -1,0 +1,83 @@
+body {
+  background-color: #000;
+}
+
+#landing-header {
+  /*so it will be in front of the background image*/
+  z-index: 1;
+  /*static position ignores z-index, therefor we use relative*/
+  position: relative;
+  /*put the text on the center of the page/screen*/
+  text-align: center;
+  padding-top: 40vh;
+}
+
+/*make it white for readability*/
+#landing-header h1 {
+  color: #fff;
+}
+
+/*styling for the unordered list; make it fixed, fill the screen, remove trace of ul*/
+.slideshow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*configure each list item to become a full size background image + attach animation*/
+.slideshow li {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  z-index: 0;
+  animation: imageAnimation 50s linear infinite;
+}
+/*attach each list item an image; and pay attention to the animation delay which will cause the cross fade effect*/
+.slideshow li:nth-child(1) {
+  background-image: url(https://unsplash.com/photos/sK1hW5knKkw/download)
+}
+.slideshow li:nth-child(2) {
+  background-image: url(https://unsplash.com/photos/pl1mhwMctJc/download);
+  animation-delay: 10s;
+}
+.slideshow li:nth-child(3) {
+  background-image: url(https://unsplash.com/photos/qmZF9CptLKs/download);
+  animation-delay: 20s;
+}
+.slideshow li:nth-child(4) {
+  background-image: url(https://unsplash.com/photos/B9z9TjfIw3I/download);
+  animation-delay: 30s;
+}
+.slideshow li:nth-child(5) {
+  background-image: url(https://unsplash.com/photos/O453M2Liufs/download);
+  animation-delay: 40s;
+}
+
+@keyframes imageAnimation {
+  0% {
+    opacity: 0;
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 0
+  }
+}
